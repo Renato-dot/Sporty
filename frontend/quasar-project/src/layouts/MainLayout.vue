@@ -73,10 +73,10 @@ const linksList = [
     link: ''
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Lokacija terena i opreme',
+    caption: 'Lokacija terena i opreme',
+    icon: 'map',
+    link: ''
   },
   {
     title: 'Twitter',
