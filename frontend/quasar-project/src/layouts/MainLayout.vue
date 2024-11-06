@@ -67,10 +67,10 @@ const linksList = [
     link: ''
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'O Nama',
+    caption: 'O Nama',
+    icon: 'book',
+    link: ''
   },
   {
     title: 'Forum',
