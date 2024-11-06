@@ -61,10 +61,10 @@ const linksList = [
     link: ''
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Pretraživanje',
+    caption: 'Pretraživanje',
+    icon: 'search',
+    link: ''
   },
   {
     title: 'Discord Chat Channel',
