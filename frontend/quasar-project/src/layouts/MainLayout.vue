@@ -63,8 +63,14 @@ const linksList = [
   {
     title: 'Oprema',
     caption: 'Dostupna oprema',
-    icon: 'book',
+    icon: 'list',
     link: '#/Oprema'
+  },
+  {
+    title: 'Tereni',
+    caption: 'Pregledajte terene',
+    icon: 'list',
+    link: '#/Tereni'
   },
   {
     title: 'Pretrazivanje',

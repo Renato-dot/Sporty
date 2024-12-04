@@ -5,6 +5,7 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: '/Oprema', component: () => import('src/pages/OpremaPage.vue') },
+      { path: '/Tereni', component: () => import('src/pages/TereniPage.vue') },
       { path: '/Pretrazivanje', component: () => import('pages/PretrazivanjePage.vue') },
       { path: '/ONama', component: () => import('pages/ONamaPage.vue') },
       { path: '/Lokacije', component: () => import('pages/LokacijePage.vue') },
