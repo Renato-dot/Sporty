@@ -7,7 +7,7 @@
     </div>
 
     <q-table
-      :rows="books"
+      :rows="oprema"
       :columns="columns"
       row-key="id"
       :filter="filter"
@@ -19,7 +19,7 @@
 <script>
 export default {
   setup() {
-    const books = [
+    const oprema = [
       {
         id: 1,
         naslov: 'Nogometni dres',
@@ -70,7 +70,7 @@ export default {
     const filter = '';
 
     return {
-      books,
+      oprema,
       columns,
       filter
     };
