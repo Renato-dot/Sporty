@@ -4,10 +4,13 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: '/PregledTerenaOpreme ', component: () => import('pages/PregledTerenaOpremePage.vue') },
-      { path: '/Pretrazivanje ', component: () => import('pages/PretrazivanjePage.vue') },
-      { path: '/ONama ', component: () => import('pages/ONamaPage.vue') },
-      { path: '/LokacijaTerenaOpreme ', component: () => import('pages/LokacijaTerenaOpremePage.vue') }
+      { path: '/Oprema', component: () => import('src/pages/OpremaPage.vue') },
+      { path: '/Pretrazivanje', component: () => import('pages/PretrazivanjePage.vue') },
+      { path: '/ONama', component: () => import('pages/ONamaPage.vue') },
+      { path: '/Lokacije', component: () => import('pages/LokacijePage.vue') },
+      { path: '/Prijava', component: () => import('pages/PrijavaPage.vue') },
+      { path: '/Registracija', component: () => import('pages/RegistracijaPage.vue') }
+
     ]
   },
 

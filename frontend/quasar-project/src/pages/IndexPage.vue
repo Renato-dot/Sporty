@@ -1,15 +1,14 @@
 <template>
   <q-page class="flex flex-center">
     <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
+      alt="Knjiznica"
+      src="~assets/kniznica.jpg"
     >
   </q-page>
 </template>
 
 <script setup>
 defineOptions({
-  name: 'NaslovnicaPage'
+  name: 'IndexPage'
 });
 </script>
