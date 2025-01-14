@@ -1,19 +1,12 @@
 <template>
   <q-page padding class="login-page">
-    <!-- Naslov i popratni tekst -->
     <div class="text-center q-mb-md">
       <h1>Login</h1>
-      <p>Unesite svoje korisničko ime i lozinku za pristup knjižnici.</p>
+      <p>Unesite svoje korisničko ime i lozinku za pristup admin sučelju.</p>
     </div>
 
-    <!-- Forma za prijavu -->
     <q-form class="q-gutter-md" @submit.prevent="onSubmit">
-      <q-input
-        filled
-        label="Korisničko ime"
-        v-model="username"
-        required
-      />
+      <q-input filled label="Korisničko ime" v-model="username" required />
       <q-input
         filled
         label="Lozinka"
@@ -27,23 +20,44 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const username = ref('');
-    const password = ref('');
+    const username = ref("");
+    const password = ref("");
+    const router = useRouter();
+    let token = "mySuperSecretKey123!@#$%^&*()_+";
 
-    const onSubmit = () => {
-      // Ovdje ide logika za provjeru podataka za prijavu
-      console.log("Korisničko ime:", username.value, "Lozinka:", password.value);
+    const onSubmit = async () => {
+      try {
+        const response = await axios.post("http://localhost:3000/api/admin", {
+          username: username.value,
+          password: password.value,
+        });
+
+        if (response.data.success) {
+          console.log("Login successful:", response.data);
+          token = response.data.token;
+          localStorage.setItem("auth-token", token);
+          router.push("/admin");
+        } else {
+          console.error("Invalid login:", response.data.message);
+          alert("Invalid username or password");
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("An error occurred during login. Please try again.");
+      }
     };
 
     return {
       username,
       password,
-      onSubmit
+      onSubmit,
     };
-  }
+  },
 };
 </script>

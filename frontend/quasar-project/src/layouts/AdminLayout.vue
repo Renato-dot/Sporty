@@ -11,8 +11,8 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-weight-bolder, text-h4">
-          Sporty
+        <q-toolbar-title class="text-h2">
+          <strong>Admin</strong> Sporty
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -38,55 +38,47 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 
 defineOptions({
-  name: "MainLayout",
+  name: "AdminLayout",
+});
+
+let title = computed(() => {
+  return "Sporty (admin)";
 });
 
 const linksList = [
   {
-    title: "Naslovnica",
-    caption: "Početna stranica",
+    title: "Admin početna",
+    caption: "Admin početna",
     icon: "home",
-    link: "#",
+    link: "#/admin",
   },
   {
     title: "Oprema",
-    caption: "Dostupna oprema",
-    icon: "list",
-    link: "#/Oprema",
+    caption: "Oprema",
+    icon: "chat",
+    link: "#/admin/opremaAPI",
   },
   {
     title: "Tereni",
-    caption: "Pregledajte terene",
-    icon: "list",
-    link: "#/Tereni",
+    caption: "Tereni",
+    icon: "chat",
+    link: "#/admin/tereniAPI",
   },
   {
-    title: "Pretrazivanje",
-    caption: "",
-    icon: "search",
-    link: "#/Pretrazivanje",
+    title: "Dodavanje terena",
+    caption: "Dodavanje terena",
+    icon: "chat",
+    link: "#/admin/dodavanje_terena",
   },
   {
-    title: "Lokacija",
-    caption: "Lokacije",
-    icon: "map",
-    link: "#/Lokacije",
-  },
-  {
-    title: "Registracija",
-    caption: "Registracija",
-    icon: "man",
-    link: "#/Registracija",
-  },
-  {
-    title: "Prijava (admin)",
-    caption: "Prijava",
-    icon: "login",
-    link: "#/Prijava",
+    title: "Logout",
+    caption: "Logout",
+    icon: "chat",
+    link: "#/admin/logout",
   },
 ];
 
