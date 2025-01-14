@@ -5,13 +5,6 @@ const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-/*
-import express from "express";
-import cors from "cors";
-import mysql from "mysql2/promise";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-*/
 const app = express();
 const port = 3000;
 
