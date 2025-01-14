@@ -1,6 +1,10 @@
 <template>
   <q-page padding>
     <div class="q-pa-md" style="max-width: 400px">
+      <center>
+        <h3>Unos terena</h3>
+        <p>Unesite željeni teren</p>
+      </center>
       <q-form @submit="onSubmit" class="q-gutter-md">
         <q-input
           filled
