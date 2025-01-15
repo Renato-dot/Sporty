@@ -88,6 +88,12 @@ const linksList = [
     icon: "login",
     link: "#/Prijava",
   },
+  {
+    title: "Admin",
+    caption: "Admin",
+    icon: "login",
+    link: "#/admin",
+  },
 ];
 
 const leftDrawerOpen = ref(false);
