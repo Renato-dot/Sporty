@@ -1,9 +1,7 @@
-
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const session = require("express-session");
 
 const app = express();
 const port = 3000;
@@ -11,6 +9,14 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "secureKey123",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 30 * 60 * 1000 },
+  })
+);
 
 const connection = mysql.createConnection({
   host: "ucka.veleri.hr",
@@ -360,44 +366,23 @@ app.post("/api/admin", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Missing username or password" });
+    return res.status(400).json({ message: "Username and password required" });
   }
 
-  try {
-    const [rows] = await connection.query(
-      "SELECT * FROM Admin WHERE username = ?",
-      [username]
-    );
-
-    if (rows.length === 0) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid username or password" });
+  const query = "SELECT * FROM Admin WHERE username = ? AND password = ?";
+  connection.query(query, [username, password], (err, results) => {
+    if (err) {
+      console.error("Error during login:", err);
+      return res.status(500).json({ message: "Server error" });
     }
 
-    const user = rows[0];
-
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid username or password" });
+    if (results.length > 0) {
+      req.session.user = { id: results[0].id, username: results[0].username };
+      res.json({ success: true, message: "Login successful" });
+    } else {
+      res.status(401).json({ success: false, message: "Invalid credentials" });
     }
-
-    const secretKey = "mySuperSecretKey123!@#$%^&*()_+";
-    const token = jwt.sign(
-      { id: user.id, username: user.username },
-      secretKey,
-      { expiresIn: "1h" }
-    );
-
-    res.json({ success: true, message: "Login successful", token });
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
+  });
 });
 
 app.listen(port, () => {
