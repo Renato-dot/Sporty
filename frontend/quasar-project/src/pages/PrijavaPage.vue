@@ -29,7 +29,6 @@ export default {
     const username = ref("");
     const password = ref("");
     const router = useRouter();
-    let token = "mySuperSecretKey123!@#$%^&*()_+";
 
     const onSubmit = async () => {
       try {
@@ -40,8 +39,7 @@ export default {
 
         if (response.data.success) {
           console.log("Login successful:", response.data);
-          token = response.data.token;
-          localStorage.setItem("auth-token", token);
+          // Redirect to the admin page after successful login
           router.push("/admin");
         } else {
           console.error("Invalid login:", response.data.message);
