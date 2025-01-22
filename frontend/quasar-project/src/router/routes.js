@@ -36,18 +36,6 @@ const routes = [
         component: () => import("pages/DodavanjeTerena.vue"),
       },
       {
-        path: "/admin/popis_korisnika",
-        component: () => import("pages/PopisKorisnikaPage.vue"),
-      },
-      {
-        path: "/admin/rezervirane_knjige",
-        component: () => import("pages/RezervacijePage.vue"),
-      },
-      {
-        path: "/admin/unos_knjige",
-        component: () => import("pages/UnosKnjigaPage.vue"),
-      },
-      {
         path: "/admin/logout",
         component: () => import("pages/AdminLogout.vue"),
       },
