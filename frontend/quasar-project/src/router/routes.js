@@ -5,10 +5,10 @@ const routes = [
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
       { path: "/Oprema", component: () => import("src/pages/OpremaAPI.vue") },
-      { path: "/Tereni", component: () => import("src/pages/TereniPage.vue") },
+      { path: "/Tereni", component: () => import("src/pages/TereniAPI.vue") },
       {
         path: "/Pretrazivanje",
-        component: () => import("pages/PretrazivanjePage.vue"),
+        component: () => import("pages/PretrazivanjeAPI.vue"),
       },
       { path: "/Lokacije", component: () => import("pages/LokacijePage.vue") },
       { path: "/Prijava", component: () => import("pages/PrijavaPage.vue") },
