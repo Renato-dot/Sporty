@@ -18,13 +18,13 @@ app.use(
   })
 );
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: "ucka.veleri.hr",
   user: "lvalenta",
   password: "11",
   database: "lvalenta",
 });
-
+/*
 connection.connect((err) => {
   if (err) {
     console.error("Error connecting to MySQL:", err.message);
@@ -32,7 +32,18 @@ connection.connect((err) => {
   }
   console.log("Connected to MySQL database!");
 });
+*/
+connection.getConnection((err, connection) => {
+  if (err) {
+    console.error("Error connecting to MySQL:", err.message);
+    process.exit(1); //
+  }
+  console.log("Connected to MySQL database!");
+  connection.release();
+});
 
+// Export the pool for use in your application
+module.exports = connection;
 //prikaz opreme
 app.get("/api/artikli", (req, res) => {
   const sql = "SELECT * FROM artikli";
@@ -129,6 +140,35 @@ app.post("/api/admin", async (req, res) => {
     } else {
       res.status(401).json({ success: false, message: "Invalid credentials" });
     }
+  });
+});
+
+//tereni search
+app.get("/api/tereniSearch", (req, res) => {
+  const { query, searchByIme, searchByLokacija } = req.query;
+
+  let sql = "SELECT * FROM Tereni WHERE 1=1";
+  const params = [];
+
+  if (query) {
+    const lowerQuery = `%${query.toLowerCase()}%`;
+    if (searchByIme === "true") {
+      sql += " AND LOWER(Naziv) LIKE ?";
+      params.push(lowerQuery);
+    }
+    if (searchByLokacija === "true") {
+      sql += " AND LOWER(Lokacija) LIKE ?";
+      params.push(lowerQuery);
+    }
+  }
+
+  connection.query(sql, params, (err, results) => {
+    if (err) {
+      console.error("Error fetching Tereni:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    res.status(200).json(results);
   });
 });
 
