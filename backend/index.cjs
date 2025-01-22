@@ -24,26 +24,18 @@ const connection = mysql.createPool({
   password: "11",
   database: "lvalenta",
 });
-/*
-connection.connect((err) => {
+
+connection.getConnection((err, connection) => {
   if (err) {
     console.error("Error connecting to MySQL:", err.message);
     process.exit(1);
   }
   console.log("Connected to MySQL database!");
-});
-*/
-connection.getConnection((err, connection) => {
-  if (err) {
-    console.error("Error connecting to MySQL:", err.message);
-    process.exit(1); //
-  }
-  console.log("Connected to MySQL database!");
   connection.release();
 });
 
-// Export the pool for use in your application
 module.exports = connection;
+
 //prikaz opreme
 app.get("/api/artikli", (req, res) => {
   const sql = "SELECT * FROM artikli";
