@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 const session = require("express-session");
 
 const app = express();
@@ -18,19 +18,11 @@ app.use(
   })
 );
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: "ucka.veleri.hr",
   user: "lvalenta",
   password: "11",
   database: "lvalenta",
-});
-
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MySQL:", err.message);
-    process.exit(1);
-  }
-  console.log("Connected to MySQL database!");
 });
 
 app.post("/api/artikli", (req, res) => {
@@ -383,6 +375,34 @@ app.post("/api/admin", async (req, res) => {
       res.status(401).json({ success: false, message: "Invalid credentials" });
     }
   });
+});
+
+app.get('/api/tereniSearch', async (req, res) => {
+  const { query, searchByIme, searchByLokacija } = req.query;
+
+  let sql = 'SELECT * FROM Tereni WHERE 1=1';
+  const params = [];
+
+  if (query) {
+    const lowerQuery = `%${query.toLowerCase()}%`;
+
+    if (searchByIme === 'true') {
+      sql += ' AND LOWER(Naziv) LIKE ?';
+      params.push(lowerQuery);
+    }
+    if (searchByLokacija === 'true') {
+      sql += ' AND LOWER(Lokacija) LIKE ?';
+      params.push(lowerQuery);
+    }
+  }
+
+  try {
+    const [results] = await connection.query(sql, params);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error fetching Tereni:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.listen(port, () => {
