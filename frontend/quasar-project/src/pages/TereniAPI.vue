@@ -3,7 +3,7 @@
     <div class="q-pa-md">
       <q-table
         separator="horizontal"
-        title="Popis opreme"
+        title="Popis terena"
         title-class="text-h4 text-bold text-red-9"
         :rows="books"
         :columns="columns"
