@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-weight-bolder, text-h4">
+        <q-toolbar-title class="text-weight-bolder text-h4">
           Sporty
         </q-toolbar-title>
 
@@ -29,6 +29,19 @@
           v-bind="link"
         />
       </q-list>
+
+      <!-- Dark mode toggle ispod linkova -->
+      <q-separator spaced />
+      <div class="q-pa-md">
+        <q-toggle
+          v-model="isDark"
+          label="Dark Mode"
+          color="primary"
+          left-label
+          :icon="isDark ? 'dark_mode' : 'light_mode'"
+          @update:model-value="toggleDarkMode"
+        />
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -39,11 +52,18 @@
 
 <script setup>
 import { ref } from "vue";
+import { Dark } from "quasar";
 import EssentialLink from "components/EssentialLink.vue";
 
 defineOptions({
   name: "MainLayout",
 });
+
+const isDark = ref(Dark.isActive);
+
+const toggleDarkMode = () => {
+  Dark.set(isDark.value);
+};
 
 const linksList = [
   {
@@ -87,7 +107,7 @@ const linksList = [
     caption: "Prijava",
     icon: "login",
     link: "#/Prijava",
-  }
+  },
 ];
 
 const leftDrawerOpen = ref(false);
