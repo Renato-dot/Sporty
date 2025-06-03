@@ -14,7 +14,11 @@ app.use(
     secret: "secureKey123",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 30 * 60 * 1000 },
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 1000 * 60 * 60, // 1 sat
+    },
   })
 );
 
@@ -35,6 +39,14 @@ connection.getConnection((err, connection) => {
 });
 
 module.exports = connection;
+
+function isAuthenticated(req, res, next) {
+  if (req.session && req.session.user) {
+    return next(); // korisnik je prijavljen
+  } else {
+    res.status(401).json({ message: "Neautoriziran pristup. Prijavite se." });
+  }
+}
 
 //prikaz opreme
 app.get("/api/artikli", (req, res) => {
@@ -96,7 +108,7 @@ app.get("/api/tereni", (req, res) => {
 });
 
 //dodavanje terena
-app.post("/api/tereniAdd", (req, res) => {
+app.post("/api/tereniAdd", isAuthenticated, (req, res) => {
   const { Naziv, Lokacija, Radno_vrijeme } = req.body;
   const sql =
     "INSERT INTO Tereni (Naziv, Lokacija, Radno_vrijeme) VALUES (?, ?, ?)";
@@ -112,9 +124,8 @@ app.post("/api/tereniAdd", (req, res) => {
 });
 
 //admin login
-app.post("/api/admin", async (req, res) => {
+app.post("/api/admin", (req, res) => {
   const { username, password } = req.body;
-
   if (!username || !password) {
     return res.status(400).json({ message: "Username and password required" });
   }
@@ -122,7 +133,6 @@ app.post("/api/admin", async (req, res) => {
   const query = "SELECT * FROM Admin WHERE username = ? AND password = ?";
   connection.query(query, [username, password], (err, results) => {
     if (err) {
-      console.error("Error during login:", err);
       return res.status(500).json({ message: "Server error" });
     }
 
@@ -162,6 +172,22 @@ app.get("/api/tereniSearch", (req, res) => {
 
     res.status(200).json(results);
   });
+});
+
+app.post("/api/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) return res.status(500).json({ message: "Greška pri odjavi" });
+    res.clearCookie("connect.sid"); // naziv ovisi o session configu
+    res.json({ message: "Odjava uspješna" });
+  });
+});
+
+app.get("/api/auth/check", (req, res) => {
+  if (req.session && req.session.user) {
+    res.json({ authenticated: true });
+  } else {
+    res.json({ authenticated: false });
+  }
 });
 
 app.listen(port, () => {
