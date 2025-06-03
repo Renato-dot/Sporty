@@ -97,6 +97,12 @@ const linksList = [
     link: "#/Lokacije",
   },
   {
+    title: "Pregled rezervacija",
+    caption: "Pregled rezervacija",
+    icon: "list",
+    link: "#/Rezervacije",
+  },
+  {
     title: "Registracija",
     caption: "Registracija",
     icon: "man",

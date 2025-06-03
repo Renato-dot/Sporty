@@ -27,7 +27,7 @@ export default {
         });
 
         if (response.data.success) {
-          this.$router.push("/admin"); // ili kamo već ide admin
+          this.$router.push("/admin");
         } else {
           this.$q.notify({ color: "negative", message: "Krivi podaci" });
         }
