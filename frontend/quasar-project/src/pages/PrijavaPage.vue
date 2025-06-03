@@ -3,7 +3,12 @@
     <q-form @submit.prevent="login">
       <q-input v-model="username" label="Korisničko ime" />
       <q-input v-model="password" label="Lozinka" type="password" />
-      <q-btn label="Prijava" type="submit" color="primary" />
+      <q-btn
+        label="Prijava"
+        type="submit"
+        color="primary"
+        data-cy="btn-login"
+      />
     </q-form>
   </q-page>
 </template>
