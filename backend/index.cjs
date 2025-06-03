@@ -190,6 +190,30 @@ app.get("/api/auth/check", (req, res) => {
   }
 });
 
+//pregled_rezervacija
+app.get("/api/rezervacije", (req, res) => {
+  const query = `
+    SELECT 
+  r.sifra_narudzbe,
+  r.datum_iznajmljivanja,
+  k.ime_korisnika,
+  k.prezime_korisnika,
+  t.naziv AS naziv_terena
+FROM rezervacije r
+JOIN korisnik k ON r.sifra_korisnika = k.sifra_korisnika
+JOIN Tereni t ON r.sifra_terena = t.sifra_terena
+ORDER BY r.datum_iznajmljivanja DESC
+  `;
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error("Greška prilikom dohvaćanja rezervacija:", err);
+      return res.status(500).json({ message: "Greška na serveru" });
+    }
+    res.json(results);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
