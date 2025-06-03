@@ -34,6 +34,7 @@ const routes = [
       {
         path: "/admin/dodavanje_terena",
         component: () => import("pages/DodavanjeTerena.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "/admin/logout",
