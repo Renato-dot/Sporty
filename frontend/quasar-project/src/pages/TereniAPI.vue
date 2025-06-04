@@ -73,7 +73,7 @@ const columns = [
   {
     name: "Lokacija terena",
     label: "Lokacije terena",
-    field: "Lokacija",
+    field: "lokacija",
     align: "left",
     style: style1,
     headerStyle: style2,
@@ -81,7 +81,7 @@ const columns = [
   {
     name: "Radno vrijeme",
     label: "Radno vrijeme",
-    field: "Radno_vrijeme",
+    field: "radno_vrijeme",
     align: "left",
     style: style1,
     headerStyle: style2,
