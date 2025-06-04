@@ -64,7 +64,7 @@ const columns = [
   {
     name: "Naziv terena",
     label: "Naziv terena",
-    field: "Naziv",
+    field: "naziv",
     align: "left",
     sortable: true,
     style: style1,
